@@ -3,21 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Achadinhos que Funcionam</title>
+<title>Achadinhos 脷teis da Shopee</title>
 
 <style>
+:root {
+  --bg: #f2f2f2;
+  --card: #ffffff;
+  --text: #222;
+  --sub: #555;
+  --primary: #ff5722;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --card: #1e1e1e;
+    --text: #f1f1f1;
+    --sub: #bbb;
+  }
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
   margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
 header {
-  background: #ff5722;
+  background: linear-gradient(135deg, #ff5722, #ff784e);
   color: white;
   text-align: center;
-  padding: 20px;
+  padding: 25px 15px;
 }
 
 .container {
@@ -25,31 +42,39 @@ header {
 }
 
 .card {
-  background: white;
-  border-radius: 10px;
+  background: var(--card);
+  border-radius: 14px;
   padding: 15px;
   margin-bottom: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
 }
 
 .card h2 {
   margin-top: 0;
+  font-size: 1.2em;
 }
 
 .card p {
-  color: #555;
+  color: var(--sub);
 }
 
 .btn {
   display: block;
   text-align: center;
-  background: #ff5722;
+  background: var(--primary);
   color: white;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--sub);
+  padding: 15px;
 }
 </style>
 </head>
@@ -57,31 +82,60 @@ header {
 <body>
 
 <header>
-  <h1>🔥 Achadinhos Úteis da Shopee</h1>
-  <p>Testados, baratos e funcionam</p>
+  <h1>馃敟 Achadinhos 脷teis da Shopee</h1>
+  <p>Baratos, pr谩ticos e bem avaliados</p>
 </header>
 
-<div class="container">
+<div class="container" id="produtos">
 
-  <div class="card">
-    <h2>💡 Lâmpada com Sensor de Movimento</h2>
-    <p>Acende sozinha quando você passa. Ideal para corredores e banheiros.</p>
-    <a class="btn" href="https://s.shopee.com.br/50SbFuRrLu" target="_blank">Ver na Shopee</a>
+  <div class="card" data-id="lampada">
+    <h2>馃挕 Lampada com Sensor de Luminosidade 
+    <p>Acende Automaticamente A Noite.</p>
+    <a class="btn" href="" target="_blank" onclick="registrarClique('lampada')">Ver na Shopee</a>
   </div>
 
-  <div class="card">
-    <h2>📱 Suporte Ajustável para Celula Moto Biker</h2>
-    <p>Assista vídeos sem segurar o celular. Conforto total.</p>
-    <a class="btn" href="https://s.shopee.com.br/806CpaGjKh" target="_blank">Ver na Shopee</a>
+  <div class="card" data-id="suporte">
+    <h2>馃摫 Suporte Ajust谩vel para Celular Moto Bike</h2>
+    <p>Assista v铆deos sem segurar o celular.</p>
+    <a class="btn" href="https://s.shopee.com.br/5q1iLJ9dqe" target="_blank" onclick="registrarClique('suporte')">Ver na Shopee</a>
   </div>
 
-  <div class="card">
-    <h2>🧺 Organizador Dobrável</h2>
-    <p>Organiza tudo sem bagunça e sem obra.</p>
-    <a class="btn" href="https://s.shopee.com.br/10wSV24VAi" target="_blank">Ver na Shopee</a>
+  <div class="card" data-id="organizador">
+    <h2>馃Ш Organizador Dobr谩vel</h2>
+    <p>Organiza arm谩rios e gavetas sem bagun莽a.</p>
+    <a class="btn" href="https://s.shopee.com.br/5q1iL4XIdl" target="_blank" onclick="registrarClique('organizador')">Ver na Shopee</a>
   </div>
 
 </div>
+
+<footer>
+  Links afiliados 鈥� Organiza莽茫o autom谩tica por interesse
+</footer>
+
+<script>
+function registrarClique(id) {
+  let cliques = JSON.parse(localStorage.getItem('cliques')) || {};
+  cliques[id] = (cliques[id] || 0) + 1;
+  localStorage.setItem('cliques', JSON.stringify(cliques));
+  ordenarProdutos();
+}
+
+function ordenarProdutos() {
+  let cliques = JSON.parse(localStorage.getItem('cliques')) || {};
+  let container = document.getElementById('produtos');
+  let cards = Array.from(container.children);
+
+  cards.sort((a, b) => {
+    let aId = a.dataset.id;
+    let bId = b.dataset.id;
+    return (cliques[bId] || 0) - (cliques[aId] || 0);
+  });
+
+  cards.forEach(card => container.appendChild(card));
+}
+
+ordenarProdutos();
+</script>
 
 </body>
 </html>
