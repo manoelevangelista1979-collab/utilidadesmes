@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Google tag (gtag.js) -->
 <!-- Google tag (Google Ads) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1001788023"></script>
 <script>
@@ -15,6 +14,20 @@
     'send_page_view': true
   });
 </script>
+  <script>
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    if (link.href && link.href.includes('shopee')) {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-1001788023',
+        'event_category': 'affiliate',
+        'event_label': link.href
+      });
+    }
+  });
+  </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
